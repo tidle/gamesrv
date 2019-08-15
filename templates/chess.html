@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Libraries -->
+    <script src="chess.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
+        integrity="sha384-q94+BZtLrkL1/ohfjR8c6L+A6qzNH9R2hBLwyoAfu3i/WCvQjzL2RQJ3uNHDISdU" crossorigin="anonymous">
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"
+        integrity="sha384-8Vi8VHwn3vjQ9eUHUxex3JSN/NFqUg3QbPyX8kWyb93+8AC/pPWTzj+nHtbC5bxD"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
+        integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <!-- My Code -->
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>Chess: Room {{ room }}</title>
+</head>
+
+<body>
+    <div id="game">
+        <h1>Chess: <span class="room">Room {{ room }}</span></h1>
+        <hr>
+        <div id="board"></div>
+        <hr>
+        <button class="b" id="pb">Play Black</button> <br>
+        <button class="b" id="pw">Play White</button> <br>
+        <hr>
+        <span class="warning" id="status">Not connected to server! Reload if this problem persists</span> <br>
+        <span id="whom"> It is white's turn. </span> <br>
+        <span id="players"><b id="pwhite">N/A</b> vs. <b id="pblack">N/A</b></span> <br>
+        <i><small>Chess v1.5</small></i>
+    </div>
+</body>
+
+</html>

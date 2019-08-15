@@ -1,0 +1,78 @@
+.highlight {
+    box-shadow: inset 0 0 3px 3px #0f0;
+}
+
+.warning {
+    color: #f66;
+}
+
+.status {
+    color: #8f8;
+}
+
+#whom {
+    color: #99f;
+}
+
+#players {
+    color: #f66;
+}
+
+#pwhite {
+    color: #fff;
+}
+
+#pblack {
+    color: #999;
+}
+@media (min-aspect-ratio: 10/9) {
+    #game {
+        width: 60vh;
+        text-align: center;
+        margin: auto;
+    }
+}
+
+@media (max-aspect-ratio: 10/9) {
+    #game {
+        width: 85vw;
+        text-align: center;
+        margin: auto;
+    }
+}
+
+#board {
+    width: 100%;
+    margin: auto;
+}
+
+.room {
+    color: #f48;
+}
+
+hr {
+    width: 95%
+}
+
+button.b {
+    width: 50%;
+    border: none;
+    height: 32px;
+    margin: 5px;
+}
+
+button.b:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button.b:hover {
+    background-color: #222;
+    border: 2px solid #eee;
+    color: #eee;
+}
+
+body {
+    background-color: #222;
+    color: #eee;
+}

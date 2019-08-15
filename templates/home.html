@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cameron's Game Server</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #eee;
+        }
+        a {
+            text-decoration: none;
+            color: #bbd;
+        }
+        .join {
+            color: #c6f;
+        }
+        .new {
+            color: #4c9;
+        }
+        .spectate {
+            color: #caa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cameron's Game Server</h1>
+    <a href="/login"><h3>Log In</h3></a>
+    <h4>Chess</h4>
+    <ul>
+        <li>
+            <a class="new" href="chess/{{ new }}/">New Room</a>
+        </li>
+        <hr>
+        <span class="join">Join:</span>
+        {% for room in chess_rooms %}
+            <li>
+                <a class="join" href="chess/{{ room }}/">Room: {{ room }} ({{ player[room] }})</a>
+            </li>
+        {% endfor %}
+        <hr>
+        <span class="spectate">Spectate:</span>
+        {% for room in s_chess_rooms %}
+            <li>
+                <a class="spectate" href="chess/{{ room }}/">Room: {{ room }} ({{ player[room] }})</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

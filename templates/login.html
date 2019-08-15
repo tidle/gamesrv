@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Log In</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #eee;
+        }
+
+        form {
+            width: 600px;
+            text-align: center;
+        }
+
+        #name {
+            width: 100%;
+            border: none;
+            height: 32px;
+            margin: 5px;
+            background-color: #222;
+            border: 2px solid rgb(238, 238, 238);
+            color: #eee;
+        }
+
+        .b {
+            width: 50%;
+            border: none;
+            height: 32px;
+            margin: 5px;
+        }
+
+        .b:hover {
+            background-color: #222;
+            border: 2px solid #eee;
+            color: #eee;
+        }
+
+        hr {
+            width: 95%;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Log In</h2>
+    <form action="/" method="post">
+        <label for="name">Name</label> <br>
+        <input type="text" name="name" id="name"> <hr>
+        <input type="submit" value="Login" class="b">
+    </form>
+</body>
+
+</html>
