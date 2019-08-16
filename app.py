@@ -117,6 +117,7 @@ def chess_get(data):
     try:
         emit("chess get", chess_state[data["room"]])
     except KeyError:
+        log("Creating new room: {}".format(data["room"]))
         chess_state[data["room"]] = {}
         chess_state[data["room"]]["board"] = "new"
         chess_state[data["room"]]["white"] = False
@@ -155,7 +156,6 @@ if __name__ == "__main__":
     host = "127.0.0.1"
     port = 5000
     log("Server running on {}:{}".format(host, port))
-    warn("test")
     try:
         sio.run(app, host=host, port=port)
     except:
