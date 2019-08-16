@@ -12,10 +12,10 @@ chess_state = {}
 
 
 def log(msg):
-    print("[INFO] [{}] {}",time.strftime("%m/%d %H:%M:%S"),msg)
+    print("[INFO] [{}] {}".format(time.strftime("%m/%d %H:%M:%S"),msg))
 
 def warn(msg):
-    print("[WARN] [{}] {}", time.strftime("%m/%d %H:%M:%S"), msg)
+    print("[WARN] [{}] {}".format(time.strftime("%m/%d %H:%M:%S"), msg))
 
 
 def chess_prune_rooms():
@@ -23,6 +23,7 @@ def chess_prune_rooms():
     DELAY = 60
     for g in list(chess_state.keys()):
         if time.time() - chess_state[g]["last_move_s"] > DELAY:
+            log("pruned room {}".format(g))
             del chess_state[g]
 
 
@@ -76,6 +77,7 @@ def login_main():
     log("User with name: {}".format(flask.session["username"]))
     if flask.session["username"] == "N/A":
         warn("Login as 'N/A' ha. ha. ha.")
+        flask.session["username"] = "l00z3r™"
     return main()
 
 
@@ -153,10 +155,9 @@ if __name__ == "__main__":
     host = "127.0.0.1"
     port = 5000
     log("Server running on {}:{}".format(host, port))
+    warn("test")
     try:
         sio.run(app, host=host, port=port)
-    except InterruptedError:
-        log("Server stopped by user")
     except:
         err = sys.exc_info()[0]
         warn("Server stopped! {}".format(err))
