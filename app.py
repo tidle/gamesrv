@@ -2,6 +2,7 @@ from flask import Flask
 import flask
 from flask_socketio import SocketIO, emit
 import time
+import sys
 
 app = Flask(__name__)
 app.secret_key = "BPkWbuRcyLfTp7mcwrLB3NTt"  # from random.org
@@ -10,7 +11,15 @@ sio = SocketIO(app)
 chess_state = {}
 
 
+def log(msg):
+    print("[INFO] [{}] {}",time.strftime("%m/%d %H:%M:%S"),msg)
+
+def warn(msg):
+    print("[WARN] [{}] {}", time.strftime("%m/%d %H:%M:%S"), msg)
+
+
 def chess_prune_rooms():
+    log("pruning rooms")
     DELAY = 60
     for g in list(chess_state.keys()):
         if time.time() - chess_state[g]["last_move_s"] > DELAY:
@@ -27,6 +36,7 @@ def get_uname():
 
 @app.route("/")
 def main():
+    log("Hit: main page")
     chess_prune_rooms()
     chess_rooms = list(chess_state.keys())
     new = 1  # The new room's number
@@ -55,12 +65,17 @@ def main():
 
 @app.route("/login")
 def login():
+    log("Hit: login")
     return flask.render_template('login.html')
 
 
 @app.route("/", methods=["POST"])
 def login_main():
+    log("Hit: login return")
     flask.session["username"] = flask.request.form['name']
+    log("User with name: {}".format(flask.session["username"]))
+    if flask.session["username"] == "N/A":
+        warn("Login as 'N/A' ha. ha. ha.")
     return main()
 
 
@@ -69,6 +84,7 @@ def login_main():
 
 @app.route("/chess/<room>/")
 def chess_html(room):
+    log("Hit: chess, room {}".format(room))
     return flask.render_template('chess.html', room=room, name=get_uname())
 
 
@@ -116,8 +132,9 @@ def chess_jblack(data):
     try:
         chess_state[data["room"]]["black"] = True
         chess_state[data["room"]]["bname"] = data["name"]
-    except KeyError:
-        pass
+        log("{} joined black in room {}".format(data["name"], data["room"]))
+    except KeyError as err:
+        warn("issue joining black, error: {}".format(err))
 
 
 @sio.on("chess jwhite")
@@ -127,12 +144,21 @@ def chess_jwhite(data):
     try:
         chess_state[data["room"]]["white"] = True
         chess_state[data["room"]]["wname"] = data["name"]
-    except KeyError:
-        pass
+        log("{} joined white in room {}".format(data["name"], data["room"]))
+    except KeyError as err:
+        warn("issue joining white, error: {}".format(err))
 
 
 if __name__ == "__main__":
-    host = "127.0.01"
-    port = 8535
-    sio.run(app, host=host, port=port)
-    print("Server running on {}:{}".format(host, port))
+    host = "127.0.0.1"
+    port = 5000
+    log("Server running on {}:{}".format(host, port))
+    try:
+        sio.run(app, host=host, port=port)
+    except InterruptedError:
+        log("Server stopped by user")
+    except:
+        err = sys.exc_info()[0]
+        warn("Server stopped! {}".format(err))
+    finally:
+        log("Exiting...")
