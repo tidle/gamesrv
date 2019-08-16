@@ -132,4 +132,7 @@ def chess_jwhite(data):
 
 
 if __name__ == "__main__":
-    sio.run(app, host="0.0.0.0")
+    host = "127.0.01"
+    port = 8535
+    sio.run(app, host=host, port=port)
+    print("Server running on {}:{}".format(host, port))
