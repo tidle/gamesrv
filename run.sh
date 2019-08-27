@@ -10,7 +10,7 @@ then
     python3 app.py > log.txt &
 elif [ $t = "stop" ]
 then
-    ps aux | grep "python3 app.py" | head -n1 | awk '{print $2}' | xargs kill
+    ps aux | grep "app.py" | head -n1 | awk '{print $2}' | xargs kill
 elif [ $t = "loud" ]
 then
     echo "Using venv..."
