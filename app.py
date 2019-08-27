@@ -6,6 +6,7 @@ from flask_socketio import SocketIO, emit
 import time
 import sys
 import requests
+import config
 
 app = Flask(__name__)
 sio = SocketIO(app)
@@ -26,9 +27,8 @@ def move(room, color, move):
 
 def chess_prune_rooms():
     log("pruning rooms")
-    DELAY = 60
     for g in list(chess_state.keys()):
-        if time.time() - chess_state[g]["last_move_s"] > DELAY:
+        if time.time() - chess_state[g]["last_move_s"] > config.prune_delay:
             log("pruned room {}".format(g))
             del chess_state[g]
 
@@ -125,7 +125,7 @@ def chess(room, path):
 
 @app.route("/chess/<room>/script.js")
 def chess_script(room):
-    return flask.render_template("chess.js", room=room, name=get_uname())
+    return flask.render_template("chess.js", room=room, name=get_uname(), reclock_interval=config.reclock_delay)
 
 
 @sio.on("chess move")
@@ -182,8 +182,8 @@ def chess_jwhite(data):
 
 
 if __name__ == "__main__":
-    host = "127.0.0.1"
-    port = 5000
+    host = config.ip
+    port = config.port
     log("Server running on {}:{}".format(host, port))
     try:
         sio.run(app, host=host, port=port)

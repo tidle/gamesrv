@@ -100,7 +100,7 @@ window.onload = function () {
         $("#status").removeClass("warning").addClass("status").html("Connected to server as a spectator");
         setInterval(function () {
             socket.emit("chess reclock", "{{ room }}");
-        }, 50);
+        }, parseInt("{{ reclock_interval }}"));
         updateStatus();
     });
     socket.on("chess jwhite", () => {
