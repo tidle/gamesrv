@@ -27,7 +27,11 @@ def p(line):
 
 i = f.readline()
 while i:
-    mode = sys.argv[1]
+    try:
+        mode = sys.argv[1]
+    except:
+        print("use all, move, info or warn!")
+        break
     if mode == "all" or mode == "move":
         p(i)
     elif mode == "info":
