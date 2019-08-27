@@ -14,7 +14,7 @@ It currently only supports chess, though I plan to add more games in the future
     - It will not affect your global python environment
 
 Done!
-*Note: by default, the server only listens to connections from localhost, port 5000.  You can change this by modifying main.py, or connect it to another web server like nginx.*
+*Note: by default, the server only listens to connections from localhost, port 5000.  You can change this by modifying config.py, or connect it to another web server like nginx.*
 
 ## Running
 
