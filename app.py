@@ -1,3 +1,5 @@
+#!/usr/bin/env pyton3
+
 from flask import Flask
 import flask
 from flask_socketio import SocketIO, emit
@@ -55,7 +57,7 @@ random_org_params = {
 r = requests.get(url="https://random.org/strings/", params=random_org_params)
 if r.status_code == 200:
     app.secret_key = r.text
-    log("Got secret key from random.org: {}".format(app.secret_key))
+    log("Got secret key from random.org: {}".format(app.secret_key.rstrip()))
 else:
     app.secret_key = str(time.time())
     warn("random.org request failed with status code: {} Using the current time: {} instead".format(
