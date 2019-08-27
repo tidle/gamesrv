@@ -3,19 +3,23 @@ import flask
 from flask_socketio import SocketIO, emit
 import time
 import sys
+import requests
 
 app = Flask(__name__)
-app.secret_key = "BPkWbuRcyLfTp7mcwrLB3NTt"  # from random.org
 sio = SocketIO(app)
 
 chess_state = {}
 
 
 def log(msg):
-    print("[INFO] [{}] {}".format(time.strftime("%m/%d %H:%M:%S"),msg))
+    print("[INFO] [{}] {}".format(time.strftime("%m/%d %H:%M:%S"), msg))
+
 
 def warn(msg):
     print("[WARN] [{}] {}".format(time.strftime("%m/%d %H:%M:%S"), msg))
+
+def move(room, color, move):
+    print("[MOVE] [{}] room {}, by {}: {}".format(time.strftime("%m/%d %H:%M:%S"), room, color, move))
 
 
 def chess_prune_rooms():
@@ -33,6 +37,29 @@ def get_uname():
     except KeyError:
         flask.session["username"] = "Anonymous"
         return flask.session["username"]
+
+
+# get secret key
+
+random_org_params = {
+    'num': 1,
+    'len': 20,
+    'digits': 'on',
+    'upperaplpha': 'on',
+    'loweraplpha': 'on',
+    'unique': 'on',
+    'format': 'plain',
+    'rnd': 'new'
+}
+# get a random key from random.org
+r = requests.get(url="https://random.org/strings/", params=random_org_params)
+if r.status_code == 200:
+    app.secret_key = r.text
+    log("Got secret key from random.org: {}".format(app.secret_key))
+else:
+    app.secret_key = str(time.time())
+    warn("random.org request failed with status code: {} Using the current time: {} instead".format(
+        r.status_code, app.secret_key))
 
 
 @app.route("/")
@@ -80,7 +107,6 @@ def login_main():
         flask.session["username"] = "l00z3r™"
     return main()
 
-
 # CHESS
 
 
@@ -103,6 +129,7 @@ def chess_script(room):
 @sio.on("chess move")
 def chess_move(msg):
     emit("chess move", msg, broadcast=True)
+    move(msg["room"], msg["color"], msg["move"])
     chess_state[msg["room"]]["board"] = msg["fen"]
     chess_state[msg["room"]]["last_move_s"] = time.time()
 
