@@ -22,9 +22,7 @@ Done!
     - You don't need to be in the virtual environment for this to work
 
 Done!
-You can stop it with control-C, or use it in headless mode with `./run.sh headless`
-
-If you have started it in headless mode, you can stop it with `./run.sh stop`
+You can stop it with `./run.sh stop`
 
 ## Viewing the log.txt file
 
