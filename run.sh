@@ -1,4 +1,6 @@
 #!/bin/bash
+cd $0/..
+
 t="start"
 if [ ! -z $1 ]
 then
