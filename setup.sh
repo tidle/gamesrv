@@ -1,5 +1,5 @@
 #!/bin/bash
-cd $0/..
+cd dirname $0
 
 if [ -d env ]
 then
