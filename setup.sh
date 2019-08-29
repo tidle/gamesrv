@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ -d env ]
 then
     echo "removing existing env/ directory"

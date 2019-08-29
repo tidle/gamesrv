@@ -1,3 +1,4 @@
+#!/bin/bash
 t="start"
 if [ ! -z $1 ]
 then
@@ -9,7 +10,7 @@ then
     echo "Using venv..."
     source env/bin/activate
     echo "Starting server..."
-    python3 -u app.py 2&> log.txt &
+    python3 -u app.py &> log.txt &
 elif [ $t = "stop" ]
 then
     ps aux | grep "app.py" | head -n1 | awk '{print $2}' | xargs kill
